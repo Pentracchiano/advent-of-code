@@ -1,28 +1,33 @@
- class Calories : PuzzleSolution {
-    private PriorityQueue<int, int> best_three = new PriorityQueue<int, int>();
+class Calories : PuzzleSolution
+{
+    private PriorityQueue<int, int> bestThree = new PriorityQueue<int, int>();
 
-    public void Setup(string? input) {
-      int elf = 0;
-      foreach (string entry in input!.Split('\n')) {
-         if (entry == "") {
-            if(this.best_three.Count >= 3) {
-               this.best_three.EnqueueDequeue(elf, elf);
-            } else {
-               this.best_three.Enqueue(elf, elf);
+    public void Setup(string? input)
+    {
+        int elf = 0;
+        foreach (string entry in input!.Split('\n'))
+        {
+            if (entry == "")
+            {
+                if (this.bestThree.Count >= 3)
+                {
+                    this.bestThree.EnqueueDequeue(elf, elf);
+                }
+                else
+                {
+                    this.bestThree.Enqueue(elf, elf);
+                }
+
+                elf = 0;
+                continue;
             }
-
-            elf = 0;
-            continue;
-         }
-         elf += int.Parse(entry);
-      }
+            elf += int.Parse(entry);
+        }
     }
 
-    public string SolvePartOne(string? input) {
-        return this.best_three.Peek().ToString();
-    }
+    public string SolvePartOne(string? input) =>
+        this.bestThree.Peek().ToString();
 
-    public string SolvePartTwo(string? input) {
-        return this.best_three.UnorderedItems.Sum(e => e.Element).ToString();
-    }
- }   
+    public string SolvePartTwo(string? input) =>
+        this.bestThree.UnorderedItems.Sum(e => e.Element).ToString();
+}

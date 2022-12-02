@@ -1,5 +1,7 @@
-﻿class Runner {
-    static void Main(string[] args) {
+﻿class Runner
+{
+    static void Main(string[] args)
+    {
         PuzzleSolution solver = new Calories();
 
         solver.Setup(File.ReadAllText(@"Puzzle1\input.txt"));
