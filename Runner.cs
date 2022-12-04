@@ -25,8 +25,8 @@
         // result = solver.SolvePartTwo(null);
         // Console.WriteLine($"Part two: {result}");
 
-        var solver = new RucksackReorganization();
-        solver.Setup(File.ReadAllText(@"Puzzle3\input.txt"));
+        var solver = new CampCleanup();
+        solver.Setup(File.ReadAllText(@"Puzzle4\input.txt"));
 
         var result = solver.SolvePartOne(null);
         Console.WriteLine($"Part one: {result}");
