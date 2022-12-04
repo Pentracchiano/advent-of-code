@@ -94,11 +94,11 @@ class Puzzle2 : PuzzleSolution
     public void Setup(string input) =>
         this.strategies = Iterators.GetLines(input!);
 
-    [Description("What would your total score following the guide according to your interpretation of X, Y, Z?")]
+    [Description("What would your total score be following the guide according to your interpretation of X, Y, Z?")]
     public string SolvePartOne() =>
         this.Solve(this.ParseLinePartOne);
 
-    [Description("What would your total score following the guide according to the intended interpretation of X, Y, Z?")]
+    [Description("What would your total score be following the guide according to the intended interpretation of X, Y, Z?")]
     public string SolvePartTwo() =>
         this.Solve(this.ParseLinePartTwo);
 }
