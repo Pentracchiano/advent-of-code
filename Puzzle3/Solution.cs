@@ -16,12 +16,10 @@ class RucksackReorganization : PuzzleSolution
     {
         foreach (string line in Iterators.GetLines(input!))
         {
-            // why can't i pass 2 ReadOnlySpans here and let the hashset iterate over them?
-            // why do i have to create copies?
             this.rucksacks.Add(
                 (
-                    new HashSet<char>(line.Substring(0, line.Count() / 2)),
-                    new HashSet<char>(line.Substring(line.Count() / 2))
+                    new HashSet<char>(line.Take(line.Count() / 2)),
+                    new HashSet<char>(line.Skip(line.Count() / 2))
                 )
             );
         }
