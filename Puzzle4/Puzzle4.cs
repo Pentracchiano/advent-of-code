@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
-class CampCleanup : PuzzleSolution
+[Description("Camp Cleanup")]
+class Puzzle4 : PuzzleSolution
 {
     private List<(Range, Range)> elves = new List<(Range, Range)>();
     private Regex rangeReader = new Regex(@"(?<firstStart>\d+)-(?<firstEnd>\d+),(?<secondStart>\d+)-(?<secondEnd>\d+)");
@@ -26,7 +28,7 @@ class CampCleanup : PuzzleSolution
         return first.Start.Value <= second.End.Value && second.Start.Value <= first.End.Value;
     }
 
-    public void Setup(string? input)
+    public void Setup(string input)
     {
         foreach (string line in Iterators.GetLines(input!))
         {
@@ -34,13 +36,11 @@ class CampCleanup : PuzzleSolution
         }
     }
 
-    public string SolvePartOne(string? input)
-    {
-        return this.elves.Where(this.RangeFullyContainedCommutative).Count().ToString();
-    }
+    [Description("In how many assignment pairs does one range fully contain the other?")]
+    public string SolvePartOne() =>
+        this.elves.Where(this.RangeFullyContainedCommutative).Count().ToString();
 
-    public string SolvePartTwo(string? input)
-    {
-        return this.elves.Where(this.RangesIntersectCommutative).Count().ToString();
-    }
+    [Description("In how many assignment pairs do the ranges overlap?")]
+    public string SolvePartTwo() =>
+        this.elves.Where(this.RangesIntersectCommutative).Count().ToString();
 }

@@ -1,4 +1,7 @@
-class RucksackReorganization : PuzzleSolution
+using System.ComponentModel;
+
+[Description("Rucksack Reorganization")]
+class Puzzle3 : PuzzleSolution
 {
     private IList<(ISet<char> first, ISet<char> second)> rucksacks = new List<(ISet<char> first, ISet<char> second)>();
 
@@ -12,7 +15,7 @@ class RucksackReorganization : PuzzleSolution
         return asciiValue - (int) 'a' + 1;
     }
 
-    public void Setup(string? input)
+    public void Setup(string input)
     {
         foreach (string line in Iterators.GetLines(input!))
         {
@@ -25,7 +28,8 @@ class RucksackReorganization : PuzzleSolution
         }
     }
 
-    public string SolvePartOne(string? input)
+    [Description("Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?")]
+    public string SolvePartOne()
     {
         int sum = 0;
         foreach ((var first, var second) in this.rucksacks) 
@@ -36,7 +40,8 @@ class RucksackReorganization : PuzzleSolution
         return sum.ToString();
     }
 
-    public string SolvePartTwo(string? input)
+    [Description("Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?")]
+    public string SolvePartTwo()
     {
         int sum = 0;
         int i = 1;

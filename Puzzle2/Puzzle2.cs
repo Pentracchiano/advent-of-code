@@ -1,4 +1,7 @@
-class RockPaperScissors : PuzzleSolution
+using System.ComponentModel;
+
+[Description("Rock Paper Scissors")]
+class Puzzle2 : PuzzleSolution
 {
     private enum GameResult : int
     {
@@ -88,12 +91,14 @@ class RockPaperScissors : PuzzleSolution
 
     }
 
-    public void Setup(string? input) =>
+    public void Setup(string input) =>
         this.strategies = Iterators.GetLines(input!);
 
-    public string SolvePartOne(string? input) =>
+    [Description("What would your total score following the guide according to your interpretation of X, Y, Z?")]
+    public string SolvePartOne() =>
         this.Solve(this.ParseLinePartOne);
 
-    public string SolvePartTwo(string? input) =>
+    [Description("What would your total score following the guide according to the intended interpretation of X, Y, Z?")]
+    public string SolvePartTwo() =>
         this.Solve(this.ParseLinePartTwo);
 }
