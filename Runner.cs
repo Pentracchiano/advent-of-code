@@ -7,7 +7,7 @@ class Runner
 
     private static string GetDescription(System.Reflection.MemberInfo info)
     {
-        return ((DescriptionAttribute) Attribute.GetCustomAttribute(info, typeof(DescriptionAttribute))!).Description;
+        return ((DescriptionAttribute)Attribute.GetCustomAttribute(info, typeof(DescriptionAttribute))!).Description;
     }
 
     private static void AddPuzzle(List<Puzzle> list, int day)
@@ -71,7 +71,7 @@ class Runner
             var result = solver.SolvePartOne();
             watch.Stop();
 
-            Console.WriteLine($"Result: {result}. Elapsed: {watch.ElapsedMilliseconds} ms.");
+            Console.WriteLine($"Result: \"{result}\". Elapsed: {watch.ElapsedMilliseconds} ms.");
 
             var partTwoDescription = GetDescription(solver.GetType().GetMethod("SolvePartTwo")!);
 
@@ -81,7 +81,7 @@ class Runner
             result = solver.SolvePartTwo();
             watch.Stop();
 
-            Console.WriteLine($"Result: {result}. Elapsed: {watch.ElapsedMilliseconds} ms.");
+            Console.WriteLine($"Result: \"{result}\". Elapsed: {watch.ElapsedMilliseconds} ms.");
 
             Console.WriteLine("");
         }
@@ -89,6 +89,14 @@ class Runner
 
     static void Main(string[] args)
     {
-        Run();
+        int day = 0;
+        string introduction = "No specific day specified. Running all available puzzles.";
+        if (args.Count() > 0 && int.TryParse(args[0], out day))
+        {
+            introduction = $"Day {day} specified through command line.";
+        }
+        Console.WriteLine(introduction + "\n");
+
+        Run(day);
     }
 }
