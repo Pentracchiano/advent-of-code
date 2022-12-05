@@ -92,6 +92,13 @@ class Puzzle5 : PuzzleSolution
         }
     }
 
+    private string Solve(bool reverseWhenMoving)
+    {
+        List<char>[] localStacks = DeepCopyStacks();
+        ApplyMoves(localStacks, reverseWhenMoving);
+        return GetTopOfStacks(localStacks);
+    }
+
     public void Setup(string input)
     {
         string[] problem = input.Split("\n\n");
@@ -100,20 +107,11 @@ class Puzzle5 : PuzzleSolution
         ReadMoves(problem[1]);
     }
 
-
     [Description("After the rearrangement procedure completes, what crate ends up on top of each stack?")]
-    public string SolvePartOne()
-    {
-        List<char>[] localStacks = DeepCopyStacks();
-        ApplyMoves(localStacks, true);
-        return GetTopOfStacks(localStacks);
-    }
+    public string SolvePartOne() =>
+        Solve(true);
 
     [Description("After the rearrangement procedure completes but without reversing the order at each move, what crate ends up on top of each stack?")]
-    public string SolvePartTwo()
-    {
-        List<char>[] localStacks = DeepCopyStacks();
-        ApplyMoves(localStacks, false);
-        return GetTopOfStacks(localStacks);
-    }
+    public string SolvePartTwo() =>
+        Solve(false);
 }
