@@ -5,12 +5,7 @@ class Puzzle6 : PuzzleSolution
 {
     private string databuffer = string.Empty;
 
-    public void Setup(string input)
-    {
-        databuffer = input;
-    }
-
-    public int FirstOccurrenceOfUniqueWindow(int windowSize)
+    private int FirstOccurrenceOfUniqueWindow(int windowSize)
     {
         Counter<char> letters = new();
         int processed = 0;
@@ -18,7 +13,9 @@ class Puzzle6 : PuzzleSolution
         foreach (char current in databuffer)
         {
             if (processed >= windowSize)
+            {
                 letters[databuffer[processed - windowSize]]--;
+            }
 
             letters[current]++;
             processed++;
@@ -30,6 +27,11 @@ class Puzzle6 : PuzzleSolution
         }
 
         return -1;
+    }
+
+    public void Setup(string input)
+    {
+        databuffer = input;
     }
 
     [Description("How many characters need to be processed before the first start-of-packet marker is detected?")]

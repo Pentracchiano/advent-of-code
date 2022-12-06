@@ -1,10 +1,10 @@
 using System.Text;
 
-class Counter<TKey> : Dictionary<TKey, int> where TKey: notnull
+class Counter<TKey> : Dictionary<TKey, int> where TKey : notnull
 {
     public Counter(IEnumerable<TKey> collection)
     {
-        foreach(var key in collection)
+        foreach (var key in collection)
         {
             this[key]++;
         }
@@ -42,5 +42,4 @@ class Counter<TKey> : Dictionary<TKey, int> where TKey: notnull
         builder.Append(")");
         return builder.ToString();
     }
-
 }
