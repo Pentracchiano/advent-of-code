@@ -23,7 +23,7 @@ class Puzzle6 : PuzzleSolution
             letters[current]++;
             processed++;
 
-            if (letters.Count() == windowSize)
+            if (letters.Count == windowSize)
             {
                 return processed;
             }
