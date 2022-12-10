@@ -5,10 +5,10 @@ class Puzzle9 : PuzzleSolution
 {
     private record Direction(int row, int col);
     private record Move(Direction direction, int steps);
-    private record Position(int row, int col)
+    private record Position()
     {
-        public int row { get; set; }
-        public int col { get; set; }
+        public int row { get; set; } = 0;
+        public int col { get; set; } = 0;
     };
 
     private List<Move> moves = new();
@@ -50,7 +50,7 @@ class Puzzle9 : PuzzleSolution
 
     private int SimulateRopeUniqueTailVisits(int knots)
     {
-        List<Position> rope = new(Enumerable.Range(0, knots).Select(_ => new Position(0, 0)));
+        List<Position> rope = new(Enumerable.Range(0, knots).Select(_ => new Position()));
 
         var tailIndex = ^1;
         var visited = new HashSet<Position> { rope[tailIndex] };
