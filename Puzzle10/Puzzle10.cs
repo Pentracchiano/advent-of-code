@@ -71,7 +71,7 @@ class Puzzle10 : PuzzleSolution
                 Enumerable
                 .Range(-1, 3)
                 .Select(i => registerValues[cycle] + i)
-                .Contains(cycle % Columns) ? '#' : '.'
+                .Contains(cycle % Columns) ? '⬜' : '⬛'
             );
         }
 
