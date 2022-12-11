@@ -1,6 +1,6 @@
 using System.Text;
 
-class Counter<TKey> : Dictionary<TKey, int> where TKey : notnull
+class Counter<TKey> : Dictionary<TKey, ulong> where TKey : notnull
 {
     public Counter(IEnumerable<TKey> collection)
     {
@@ -15,11 +15,11 @@ class Counter<TKey> : Dictionary<TKey, int> where TKey : notnull
 
     }
 
-    public new int this[TKey key]
+    public new ulong this[TKey key]
     {
         get
         {
-            int count = 0;
+            ulong count = 0;
             TryGetValue(key, out count);
             return count;
         }
