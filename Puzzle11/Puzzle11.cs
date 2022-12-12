@@ -3,7 +3,10 @@ using System.ComponentModel;
 [Description("Monkey in the Middle")]
 class Puzzle11 : PuzzleSolution
 {
-    private record Monkey(Queue<long> items, Func<long, long> operation, Func<long, int> test, int divisionTest);
+    private record Monkey(Func<long, long> operation, Func<long, int> test, int divisionTest)
+    {
+        public Queue<long> items { get; set; } = new();
+    }
     private List<Monkey> monkeys = new();
 
     private (Func<long, int>, int) ParseTest(string[] testInput)
@@ -38,11 +41,11 @@ class Puzzle11 : PuzzleSolution
         {
             (Func<long, int> test, int divisibleBy) = ParseTest(monkeyInput[3..]);
             monkeys.Add(new(
-                items: ParseItems(monkeyInput[1]),
                 operation: ParseOperation(monkeyInput[2]),
                 test: test,
                 divisionTest: divisibleBy
             ));
+            monkeys[^1].items = ParseItems(monkeyInput[1]);
         }
     }
 
@@ -63,23 +66,35 @@ class Puzzle11 : PuzzleSolution
         return a == 0 ? b : a;
     }
 
-
     private long LeastCommonMultiple(long a, long b) =>
         (a * b) / GreatestCommonDivisor(a, b);
 
+    private List<Monkey> CloneMonkeys()
+    {
+        var newMonkeys = new List<Monkey>();
+
+        for (int i = 0; i < monkeys.Count; i++)
+        {
+            newMonkeys.Add(new(monkeys[i].operation, monkeys[i].test, monkeys[i].divisionTest));
+            newMonkeys[i].items = new(monkeys[i].items);
+        }
+
+        return newMonkeys;
+    }
+
     private ulong MonkeyBusinessAfter(int rounds, bool divideByThree)
     {
+        var localMonkeys = CloneMonkeys();
+
         var monkeyInspections = new Counter<Monkey>();
-        long leastCommonMultipleOfTests = 
-            monkeys
-            .Select(monkey => monkey.divisionTest) 
+        long leastCommonMultipleOfTests =
+            localMonkeys
+            .Select(monkey => monkey.divisionTest)
             .Aggregate(seed: 1L, (long lcm, int value) => LeastCommonMultiple(lcm, value));
-        
-        
 
         for (int round = 0; round < rounds; round++)
         {
-            foreach (var monkey in monkeys)
+            foreach (var monkey in localMonkeys)
             {
                 int toDequeue = monkey.items.Count;
                 for (int _ = 0; _ < toDequeue; _++)
@@ -92,14 +107,13 @@ class Puzzle11 : PuzzleSolution
                         item /= 3;
                     }
                     var newMonkey = monkey.test(item);
-                    monkeys[newMonkey].items.Enqueue(item);
+                    localMonkeys[newMonkey].items.Enqueue(item);
 
                     monkeyInspections[monkey]++;
                 }
             }
         }
 
-        monkeyInspections.Values.OrderDescending().ToList().ForEach(Console.WriteLine);
         return monkeyInspections.Values.OrderDescending().Take(2).Aggregate((acc, value) => acc * value);
     }
 
@@ -109,5 +123,5 @@ class Puzzle11 : PuzzleSolution
 
     [Description("Starting again from the initial state in your puzzle input, what is the level of monkey business after 10000 rounds?")]
     public string SolvePartTwo() =>
-        MonkeyBusinessAfter(20, false).ToString();
+        MonkeyBusinessAfter(10000, false).ToString();
 }
