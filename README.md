@@ -23,7 +23,7 @@ This is an example with the day `7` specified:
 PS C:\Users\Davide\Documents\advent-of-code-2022> dotnet run 7
 Day 7 specified through command line.
 
-Running Puzzle7: No Space Left On Device.
+Running Puzzle07: No Space Left On Device.
 Setup completed. Elapsed: 6 ms.
 Part one. Find all of the directories with a total size of at most 100000. What is the sum of the total sizes of those directories?
 Result: "2104783". Elapsed: 4 ms.

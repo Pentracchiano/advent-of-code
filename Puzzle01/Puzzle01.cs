@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Calorie Counting")]
-class Puzzle1 : PuzzleSolution
+class Puzzle01 : PuzzleSolution
 {
     private PriorityQueue<int, int> bestThree = new PriorityQueue<int, int>();
 

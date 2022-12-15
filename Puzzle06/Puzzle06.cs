@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Tuning Trouble")]
-class Puzzle6 : PuzzleSolution
+class Puzzle06 : PuzzleSolution
 {
     private string databuffer = string.Empty;
 

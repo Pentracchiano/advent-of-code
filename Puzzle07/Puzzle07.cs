@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("No Space Left On Device")]
-class Puzzle7 : PuzzleSolution
+class Puzzle07 : PuzzleSolution
 {
     private enum FileType { DIR, FILE };
     private record FileInfo(FileType type, string name, Dictionary<string, FileInfo>? children, FileInfo? parent)

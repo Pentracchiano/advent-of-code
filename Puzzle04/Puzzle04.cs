@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 [Description("Camp Cleanup")]
-class Puzzle4 : PuzzleSolution
+class Puzzle04 : PuzzleSolution
 {
     private List<(Range, Range)> elves = new List<(Range, Range)>();
     private Regex rangeReader = new Regex(@"(?<firstStart>\d+)-(?<firstEnd>\d+),(?<secondStart>\d+)-(?<secondEnd>\d+)");

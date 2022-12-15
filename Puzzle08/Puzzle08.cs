@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Treetop Tree House")]
-class Puzzle8 : PuzzleSolution
+class Puzzle08 : PuzzleSolution
 {
     int[,] map = new int[0, 0];
 

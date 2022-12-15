@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 [Description("Supply Stacks")]
-class Puzzle5 : PuzzleSolution
+class Puzzle05 : PuzzleSolution
 {
     private List<char>[]? stacks;
     private List<(int amount, int from, int to)> moves = new List<(int amount, int from, int to)>();

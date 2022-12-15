@@ -12,7 +12,7 @@ class Runner
 
     private static void AddPuzzle(List<Puzzle> list, int day)
     {
-        var puzzleString = $"Puzzle{day}";
+        var puzzleString = $"Puzzle{day:D2}";
 
         list.Add(new Puzzle(
             (PuzzleSolution)(Activator.CreateInstance(Type.GetType(puzzleString)

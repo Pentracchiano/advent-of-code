@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Rope Bridge")]
-class Puzzle9 : PuzzleSolution
+class Puzzle09 : PuzzleSolution
 {
     private record Direction(int row, int col);
     private record Move(Direction direction, int steps);

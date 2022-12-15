@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Rucksack Reorganization")]
-class Puzzle3 : PuzzleSolution
+class Puzzle03 : PuzzleSolution
 {
     private IList<(ISet<char> first, ISet<char> second)> rucksacks = new List<(ISet<char> first, ISet<char> second)>();
 

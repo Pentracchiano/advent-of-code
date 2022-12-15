@@ -1,7 +1,7 @@
 using System.ComponentModel;
 
 [Description("Rock Paper Scissors")]
-class Puzzle2 : PuzzleSolution
+class Puzzle02 : PuzzleSolution
 {
     private enum GameResult : int
     {
