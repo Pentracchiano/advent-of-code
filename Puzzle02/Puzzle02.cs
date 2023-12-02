@@ -53,6 +53,7 @@ class Puzzle02 : PuzzleSolution
     [Description("Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?")]
     public string SolvePartOne()
     {
+        // after part2, could have been MinimumPossibleCubes <= constraints basically
         var constraints = new Dictionary<string, int> { { "red", 12 }, { "green", 13 }, { "blue", 14 } };
         return games
         .Where(game => IsGamePossible(game.game, constraints))
@@ -63,8 +64,9 @@ class Puzzle02 : PuzzleSolution
     [Description("For each game, find the minimum set of cubes that must have been present. What is the sum of the power of these sets?")]
     public string SolvePartTwo() =>
         games
-        .Select(game => MinimumPossibleCubes(game.game))
-        .Select(bag => PowerOfBag(bag))
+        .Select(game => game.game)
+        .Select(MinimumPossibleCubes)
+        .Select(PowerOfBag)
         .Sum()
         .ToString();
 }
