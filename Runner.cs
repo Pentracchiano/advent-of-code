@@ -10,25 +10,26 @@ class Runner
         return ((DescriptionAttribute)Attribute.GetCustomAttribute(info, typeof(DescriptionAttribute))!).Description;
     }
 
-    private static void AddPuzzle(List<Puzzle> list, int day)
+    private static void AddPuzzle(List<Puzzle> list, int day, int year)
     {
-        var puzzleString = $"Puzzle{day:D2}";
+        var puzzleName = $"Puzzle{day:D2}";
+        var puzzleClassName = $"Advent{year}.{puzzleName}";
 
         list.Add(new Puzzle(
-            (PuzzleSolution)(Activator.CreateInstance(Type.GetType(puzzleString)
-                ?? throw new ArgumentException($"Solver for day {day} is not loaded in this assembly."))
-                    ?? throw new ArgumentException("Impossible to instantiate solver for day {day}.")),
-            File.ReadAllText(Path.Combine(puzzleString, "input.txt"))
+            (PuzzleSolution)(Activator.CreateInstance(Type.GetType(puzzleClassName)
+                ?? throw new ArgumentException($"Solver for day {day} and year {year} is not loaded in this assembly."))
+                    ?? throw new ArgumentException("Impossible to instantiate solver for day {day} and year {year}.")),
+            File.ReadAllText(Path.Combine(puzzleName, "input.txt"))
         ));
     }
 
-    private static List<Puzzle> LoadPuzzles(int day = 0)
+    private static List<Puzzle> LoadPuzzles(int year, int day = 0)
     {
         var puzzles = new List<Puzzle>();
 
         if (day != 0)
         {
-            AddPuzzle(puzzles, day);
+            AddPuzzle(puzzles, day, year);
             return puzzles;
         }
 
@@ -40,15 +41,15 @@ class Runner
         foreach (string puzzleDirectory in Directory.GetDirectories(".", "Puzzle*", SearchOption.TopDirectoryOnly).Order(integerComparison))
         {
             int foundPuzzleDay = int.Parse(puzzleDirectory.AsSpan().Slice(8));
-            AddPuzzle(puzzles, foundPuzzleDay);
+            AddPuzzle(puzzles, foundPuzzleDay, year);
         }
 
         return puzzles;
     }
 
-    private static void Run(int day = 0)
+    private static void Run(int year, int day = 0)
     {
-        var puzzles = LoadPuzzles(day);
+        var puzzles = LoadPuzzles(year, day);
 
         foreach ((PuzzleSolution solver, string input) in puzzles)
         {
@@ -90,13 +91,19 @@ class Runner
     static void Main(string[] args)
     {
         int day = 0;
-        string introduction = "No specific day specified. Running all available puzzles.";
-        if (args.Count() > 0 && int.TryParse(args[0], out day))
+        int year = 2023;
+        string introduction = $"No specific day specified. Running all available puzzles for year {year}.";
+        if (args.Length > 1 && int.TryParse(args[1], out int newYear))
+        {
+            year = newYear;
+            introduction = $"Year {year} specified through command line. ";
+        }
+        if (args.Length > 0 && int.TryParse(args[0], out day))
         {
             introduction = $"Day {day} specified through command line.";
         }
         Console.WriteLine(introduction + "\n");
 
-        Run(day);
+        Run(year, day);
     }
 }

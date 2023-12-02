@@ -1,3 +1,5 @@
+namespace Advent2022;
+
 using System.ComponentModel;
 
 [Description("No Space Left On Device")]
