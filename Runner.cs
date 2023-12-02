@@ -92,17 +92,20 @@ class Runner
     {
         int day = 0;
         int year = 2023;
-        string introduction = $"No specific day specified. Running all available puzzles for year {year}.";
+        
         if (args.Length > 1 && int.TryParse(args[1], out int newYear))
         {
             year = newYear;
-            introduction = $"Year {year} specified through command line. ";
+            Console.WriteLine($"Year {year} specified through command line.");
         }
         if (args.Length > 0 && int.TryParse(args[0], out day))
         {
-            introduction = $"Day {day} specified through command line.";
+            Console.WriteLine($"Day {day} specified through command line.");
+        } else
+        {
+            Console.WriteLine($"No day specified through command line. Running all days for year {year}.");
         }
-        Console.WriteLine(introduction + "\n");
+        Console.WriteLine();
 
         Run(year, day);
     }
