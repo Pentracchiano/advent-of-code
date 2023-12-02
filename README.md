@@ -10,7 +10,7 @@ All of the puzzles inherit from PuzzleSolution, offering a Setup to be initializ
 Runner is the main file that runs the entire project: it's configurable from the terminal by optionally passing the day and year of the puzzle to run:
 
 ```powershell
-dotnet run [day]
+dotnet run [day] [year] ["real"|"example"]
 ```
 
 If `day` is not provided, it will run all available puzzles. 
@@ -36,7 +36,7 @@ Without specifying a day, the program will just launch all the solutions that ar
 ## Implementation
 
 In order to find a puzzle, Runner looks in the current directory for any `Puzzle[day]` subdirectories and then runs the corresponding class by
-leveraging the `CodeDOM`. It assumes that the classes are already loaded in the assembly: that is, it will not read the file and then compile it. It's  
+leveraging the `CodeDOM`. It assumes that the classes are already loaded in the assembly: that is, it will not read the file and then compile it. It's 
 effectively using the name of the directory just to know which classes are loaded, and to discern which `input.txt` file to feed the `Solution` object with. 
 
 ### Possible improvements
