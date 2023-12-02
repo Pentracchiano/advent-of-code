@@ -10,7 +10,7 @@ class Runner
         return ((DescriptionAttribute)Attribute.GetCustomAttribute(info, typeof(DescriptionAttribute))!).Description;
     }
 
-    private static void AddPuzzle(List<Puzzle> list, int day, int year)
+    private static void AddPuzzle(List<Puzzle> list, int day, int year, string inputType)
     {
         var puzzleName = $"Puzzle{day:D2}";
         var puzzleClassName = $"Advent{year}.{puzzleName}";
@@ -19,17 +19,17 @@ class Runner
             (PuzzleSolution)(Activator.CreateInstance(Type.GetType(puzzleClassName)
                 ?? throw new ArgumentException($"Solver for day {day} and year {year} is not loaded in this assembly."))
                     ?? throw new ArgumentException("Impossible to instantiate solver for day {day} and year {year}.")),
-            File.ReadAllText(Path.Combine(puzzleName, "input.txt"))
+            File.ReadAllText(Path.Combine(puzzleName, inputType == "real" ? "input.txt" : "example.txt"))
         ));
     }
 
-    private static List<Puzzle> LoadPuzzles(int year, int day = 0)
+    private static List<Puzzle> LoadPuzzles(int year, int day = 0, string inputType = "real")
     {
         var puzzles = new List<Puzzle>();
 
         if (day != 0)
         {
-            AddPuzzle(puzzles, day, year);
+            AddPuzzle(puzzles, day, year, inputType);
             return puzzles;
         }
 
@@ -41,15 +41,15 @@ class Runner
         foreach (string puzzleDirectory in Directory.GetDirectories(".", "Puzzle*", SearchOption.TopDirectoryOnly).Order(integerComparison))
         {
             int foundPuzzleDay = int.Parse(puzzleDirectory.AsSpan().Slice(8));
-            AddPuzzle(puzzles, foundPuzzleDay, year);
+            AddPuzzle(puzzles, foundPuzzleDay, year, inputType);
         }
 
         return puzzles;
     }
 
-    private static void Run(int year, int day = 0)
+    private static void Run(int year, int day = 0, string inputType = "real")
     {
-        var puzzles = LoadPuzzles(year, day);
+        var puzzles = LoadPuzzles(year, day, inputType);
 
         foreach ((PuzzleSolution solver, string input) in puzzles)
         {
@@ -92,6 +92,7 @@ class Runner
     {
         int day = 0;
         int year = 2023;
+        string inputType = "real";
         
         if (args.Length > 1 && int.TryParse(args[1], out int newYear))
         {
@@ -105,8 +106,13 @@ class Runner
         {
             Console.WriteLine($"No day specified through command line. Running all days for year {year}.");
         }
+        if (args.Length > 2 && args[2] == "example")
+        {
+            Console.WriteLine("Running example input.");
+            inputType = "example";
+        }
         Console.WriteLine();
 
-        Run(year, day);
+        Run(year, day, inputType);
     }
 }
