@@ -51,7 +51,7 @@ class Puzzle04 : PuzzleSolution
         foreach ((var winning, var mine) in cards)
         {
             var matches = winning.Intersect(mine).Count();
-            for (int j = 1; j <=  matches; j++)
+            for (int j = 1; j <= matches; j++)
             {
                 cardAmounts[i + j] += cardAmounts[i];
             }
