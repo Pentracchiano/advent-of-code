@@ -39,10 +39,8 @@ class Puzzle07 : PuzzleSolution
         }
     }
 
-    private int TypePriority(Player player)
+    private int TypePriority(string hand)
     {
-        var hand = player.Hand;
-
         var matches = hand.GroupBy(c => c);
 
         // one group == 5 of a kind
@@ -87,6 +85,45 @@ class Puzzle07 : PuzzleSolution
         return 6;
     }
 
+    private int TypePriorityWithJokers(string hand)
+    {
+        var handWithoutJokers = hand.Where(c => c != 'J');
+        var jokers = hand.Length - handWithoutJokers.Count();
+
+        if (jokers == 0)
+        {
+            return TypePriority(hand);
+        }
+
+        if (jokers == 5)
+        {
+            return 0;
+        }
+
+        var matches = handWithoutJokers.GroupBy(c => c);
+        var bestSequence = matches.Max(c => c.Count());
+
+        if (bestSequence + jokers == 5)
+        {
+            // 5 of a kind
+            return 0;
+        } else if (bestSequence + jokers == 4)
+        {
+            // 4 of a kind
+            return 1;
+        } else if (bestSequence + jokers == 3 && jokers == 1 && matches.Count() == 2)
+        {
+            // full house
+            return 2;
+        } else if (bestSequence + jokers == 3)
+        {
+            // 3 of a kind
+            return 3;
+        }
+        // 2 of a kind (no possibility of double pair or single card)
+        return 5;
+    }
+
     private int CompareHighestValue(IEnumerable<int> first, IEnumerable<int> second)
     {
         foreach (var (f, s) in first.Zip(second))
@@ -107,15 +144,18 @@ class Puzzle07 : PuzzleSolution
     [Description("Find the rank of every hand in your set. What are the total winnings?")]
     public string SolvePartOne() =>
         players
-            .OrderByDescending(TypePriority)
+            .OrderByDescending(p => TypePriority(p.Hand))
             .ThenByDescending(x => x.Hand.Select(v => cardPriority[v]), Comparer<IEnumerable<int>>.Create(CompareHighestValue))
             .Select((p, i) => p.Bid * (i + 1))
             .Sum()
             .ToString();
 
-    [Description("")]
-    public string SolvePartTwo()
-    {
-        throw new NotImplementedException();
-    }
+    [Description("Using the new joker rule, find the rank of every hand in your set. What are the new total winnings?")]
+    public string SolvePartTwo() =>
+        players
+            .OrderByDescending(p => TypePriorityWithJokers(p.Hand))
+            .ThenByDescending(x => x.Hand.Select(v => v == 'J' ? 13 : cardPriority[v]), Comparer<IEnumerable<int>>.Create(CompareHighestValue))
+            .Select((p, i) => p.Bid * (i + 1))
+            .Sum()
+            .ToString();
 }
