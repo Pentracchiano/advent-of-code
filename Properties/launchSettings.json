@@ -2,7 +2,7 @@
   "profiles": {
     "advent-of-code": {
       "commandName": "Project",
-      "commandLineArgs": "6 2023 example",
+      "commandLineArgs": "7 2023 example",
       "workingDirectory": "C:\\Users\\davidecafaro\\source\\repos\\advent-of-code"
     }
   }
