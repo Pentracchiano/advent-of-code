@@ -3,7 +3,7 @@ namespace Advent2022;
 using System.ComponentModel;
 using System.Text;
 
-[Description("")]
+[Description("Distress Signal")]
 class Puzzle13 : PuzzleSolution
 {
     List<(PacketInfo left, PacketInfo right)> packetPairs = new();
@@ -20,18 +20,12 @@ class Puzzle13 : PuzzleSolution
 
         public IEnumerable<object> Contents
         {
-            get
-            {
-                return Values.AsEnumerable();
-            }
+            get => Values.AsEnumerable();
         }
 
         public int Count
         {
-            get
-            {
-                return Values.Count;
-            }
+            get => Values.Count;
         }
 
         public void Add(object value)

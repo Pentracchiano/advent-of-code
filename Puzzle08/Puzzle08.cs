@@ -32,6 +32,9 @@ class Puzzle08 : PuzzleSolution
         .ToDictionary();
     }
 
+    public string GetNext(string current, int step) =>
+        map[current][moves[step]];
+
     [Description("How many steps are required to reach ZZZ?")]
     public string SolvePartOne()
     {
@@ -40,16 +43,32 @@ class Puzzle08 : PuzzleSolution
         
         while (current != "ZZZ")
         {
-            var next = map[current][moves[(int) (steps % moves.Count)]];
-            current = next;
+            current = GetNext(current, (int) (steps % moves.Count));
             steps++;
         }
         return steps.ToString();
     }
 
-        
+    [Description("How many steps does it take before you're only on nodes that end with Z?")]
+    public string SolvePartTwo() 
+    {
+        var currents = map.Keys.Where(key => key.EndsWith("A"));
+        // find the path size to Z for each.
+        // then find the LCM of the paths.
+        // i suspect that here the paths are going to be with loops,
+        // so we'll need to find the LCM of the loops. or we'll loop for a long time.
 
-    [Description("")]
-    public string SolvePartTwo() =>
-        "";
+        var stepsForEachStart = currents.Select(current => {
+            long steps = 0;
+            while (!current.EndsWith("Z"))
+            {
+                current = GetNext(current, (int) (steps % moves.Count));
+                steps++;
+            }
+            return steps;
+        });
+
+        var lcm = stepsForEachStart.Aggregate(MathTools.LeastCommonMultiple);
+        return lcm.ToString();
+    }
 }
