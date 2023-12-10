@@ -31,19 +31,15 @@ class Puzzle09 : PuzzleSolution
         return reconstruction;
     }
 
-    [Description("Analyze your OASIS report and extrapolate the next value for each history. What is the sum of these extrapolated values?")]
-    public string SolvePartOne()
+    private string Solve(Func<List<int>, int, int> reconstructSingleValue)
     {
         int sum = 0;
         foreach (var entry in history)
         {
-            // in theory i can skip the last and the second to last.
-            // maybe this information (the last is always zero, the second to last is always equal to a constant)
-            // can be used to optimize part 2.
             int lastReconstructed = 0;
             foreach (var reconstructed in Reconstruct(entry).Reverse<List<int>>().Append(entry))
             {
-                lastReconstructed += reconstructed.Last();
+                lastReconstructed = reconstructSingleValue(reconstructed, lastReconstructed);
             }
 
             sum += lastReconstructed;
@@ -51,23 +47,12 @@ class Puzzle09 : PuzzleSolution
 
         return sum.ToString();
     }
+
+    [Description("Analyze your OASIS report and extrapolate the next value for each history. What is the sum of these extrapolated values?")]
+    public string SolvePartOne() =>
+        Solve((reconstructed, lastReconstructed) => reconstructed.Last() + lastReconstructed);
 
     [Description("Analyze your OASIS report again, this time extrapolating the previous value for each history. What is the sum of these extrapolated values?")]
-    public string SolvePartTwo()
-    {
-        int sum = 0;
-        foreach (var entry in history)
-        {
-            int lastReconstructed = 0;
-            foreach (var reconstructed in Reconstruct(entry).Reverse<List<int>>().Append(entry))
-            {
-                lastReconstructed = reconstructed.First() - lastReconstructed;
-            }
-
-            sum += lastReconstructed;
-        }
-
-        return sum.ToString();
-
-    }
+    public string SolvePartTwo() =>
+        Solve((reconstructed, lastReconstructed) => reconstructed.First() - lastReconstructed);
 }
