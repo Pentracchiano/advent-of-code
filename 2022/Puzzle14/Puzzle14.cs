@@ -77,13 +77,14 @@ class Puzzle14 : PuzzleSolution
     [Description("How many units of sand come to rest before sand starts flowing into the abyss below?")]
     public string SolvePartOne()
     {
-        var pouringStart = new Column(500);
-        map.TryGetValue(pouringStart, out pouringStart);
+        // var pouringStart = new Column(500);
+        // map.TryGetValue(pouringStart, out pouringStart);
 
-        // find the lowest point in column 500
-        pouringStart.Tiles.ToList().ForEach(Console.WriteLine);
+        // // find the lowest point in column 500
+        // pouringStart.Tiles.ToList().ForEach(Console.WriteLine);
 
-        return pouringStart.Tiles.GetViewBetween(new Tile(0, TileType.AIR), null).First().ToString();
+        // return pouringStart.Tiles.GetViewBetween(new Tile(0, TileType.AIR), null).First().ToString();
+        throw new NotImplementedException();
     }
 
     [Description("")]
