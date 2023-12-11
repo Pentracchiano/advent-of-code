@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Microsoft.VisualBasic;
 
 [Description("Mirage Maintenance")]
 class Puzzle09 : PuzzleSolution
